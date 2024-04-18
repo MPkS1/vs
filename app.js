@@ -1,31 +1,34 @@
-function navigate(destination) {
-    if (destination.toLowerCase() === 'open google') {
-        window.location.href = 'https://google.com';
-    } else if (destination.toLowerCase() === 'diseases') {
-        window.location.href = 'diseases.html';
-    } else if (destination.toLowerCase() === 'blood donation') {
-        window.location.href = 'blooddonation.html';
+function startVoiceRecognition() {
+    // Check if browser supports SpeechRecognition
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        // Create SpeechRecognition object
+        var recognition = new webkitSpeechRecognition || SpeechRecognition();
+        
+        // Set recognition parameters
+        recognition.lang = 'en-US'; // Language for speech recognition
+
+        // Start recognition
+        recognition.start();
+        
+        // Event listener for speech recognition result
+        recognition.onresult = function(event) {
+            var result = event.results[0][0].transcript.toLowerCase(); // Get the recognized text
+            
+            // Check if the recognized text matches the command
+            if (result.includes("open whatsapp")) {
+                var whatsappWebUrl = "https://web.whatsapp.com/";
+                window.open(whatsappWebUrl, "_blank");
+            } else {
+                alert("Command not recognized. Please try again.");
+            }
+        };
+
+        // Event listener for recognition error
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            alert('Speech recognition error. Please try again.');
+        };
+    } else {
+        alert('Speech recognition not supported in your browser.');
     }
 }
-
-// Speech recognition
-const recognition = new webkitSpeechRecognition(); // for Chrome
-recognition.lang = 'en-US';
-
-recognition.onresult = function(event) {
-    const result = event.results[0][0].transcript;
-    console.log('You said: ', result);
-    navigate(result);
-}
-
-recognition.onerror = function(event) {
-    console.error('Speech recognition error:', event.error);
-}
-
-// Function to start speech recognition when the page loads
-function startSpeechRecognition() {
-    recognition.start();
-}
-
-// Start speech recognition when the page loads
-document.addEventListener('DOMContentLoaded', startSpeechRecognition);
