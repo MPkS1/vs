@@ -1,4 +1,4 @@
- function startVoiceRecognition() {
+function startVoiceRecognition() {
             // Check if browser supports SpeechRecognition
             if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
                 // Create SpeechRecognition object
@@ -16,8 +16,9 @@
 
                     // Check if the recognized text matches the command
                     if (result.includes("open whatsapp")) {
-                        var whatsappWebUrl = "https://web.whatsapp.com/";
-                        window.open(whatsappWebUrl, "_blank");
+                        // Assuming WhatsApp has a custom URL scheme
+                        var whatsappAppUrl = "whatsapp://";
+                        window.location.href = whatsappAppUrl;
                     } else {
                         alert("Command not recognized. Please try again.");
                     }
