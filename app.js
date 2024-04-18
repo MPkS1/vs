@@ -15,8 +15,9 @@ function startVoiceRecognition() {
                     var result = event.results[0][0].transcript.toLowerCase(); // Get the recognized text
 
                     // Check if the recognized text matches the command
-                    if (result.includes("create text file")) {
-                        createTextFile();
+                    if (result.includes("open whatsapp")) {
+                        var whatsappWebUrl = "https://web.whatsapp.com/";
+                        window.open(whatsappWebUrl, "_blank");
                     } else {
                         alert("Command not recognized. Please try again.");
                     }
@@ -29,17 +30,5 @@ function startVoiceRecognition() {
                 };
             } else {
                 alert('Speech recognition not supported in your browser.');
-            }
-        }
-
-        function createTextFile() {
-            var text = "This is a sample text file. Open it in Notepad.";
-            var blob = new Blob([text], { type: 'text/plain' });
-            var url = URL.createObjectURL(blob);
-            var link = document.createElement("a");
-            link.href = url;
-            link.download = "sample.txt";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+            }
+        }
