@@ -15,10 +15,8 @@ function startVoiceRecognition() {
                     var result = event.results[0][0].transcript.toLowerCase(); // Get the recognized text
 
                     // Check if the recognized text matches the command
-                    if (result.includes("open whatsapp")) {
-                        // Assuming WhatsApp has a custom URL scheme
-                        var whatsappAppUrl = "whatsapp://";
-                        window.location.href = whatsappAppUrl;
+                    if (result.includes("open notepad")) {
+                        alert("Please open Notepad manually on your computer.");
                     } else {
                         alert("Command not recognized. Please try again.");
                     }
