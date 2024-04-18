@@ -57,7 +57,7 @@ function takeCommand(message){
         speak("Hello Sir, How May I Help You?");
     }
     else if(message.includes("open google")){
-        window.open("https://google.com", "_blank");
+        window.location.href = "https://google.com";
         speak("Opening Google...")
     }
     else if(message.includes("open youtube")){
