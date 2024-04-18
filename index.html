@@ -1,33 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+function startVoiceRecognition() {
+    // Check if browser supports SpeechRecognition
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        // Create SpeechRecognition object
+        var recognition = new webkitSpeechRecognition || SpeechRecognition();
+        
+        // Set recognition parameters
+        recognition.lang = 'en-US'; // Language for speech recognition
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JARVIS - Virtual Assistant</title>
-    <link rel="shortcut icon" href="avatar.png" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        // Start recognition
+        recognition.start();
+        
+        // Event listener for speech recognition result
+        recognition.onresult = function(event) {
+            var result = event.results[0][0].transcript.toLowerCase(); // Get the recognized text
+            
+            // Check if the recognized text matches the command
+            if (result.includes("open whatsapp")) {
+                var whatsappWebUrl = "https://web.whatsapp.com/";
+                window.open(whatsappWebUrl, "_blank");
+            } else {
+                alert("Command not recognized. Please try again.");
+            }
+        };
 
-</head>
-
-<body>
-    <section class="main">
-        <div class="image-container">
-            <div class="image">
-                <img src="./skyyy.gif" alt="image">
-            </div>
-            <h1>J A R V I S f.0</h1>
-            <p>I'm a Virtual Assistant JARVIS, How may I help you?</p>
-        </div>
-        <div class="input">
-            <button class="talk"><i class="fas fa-microphone-alt"></i></button>
-            <h1 class="content"> Click here to speak</h1>
-        </div>
-    </section>
-    <!-- Include your JavaScript file here -->
-    <script src="app.js"></script>
-</body>
-
-</html>
+        // Event listener for recognition error
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            alert('Speech recognition error. Please try again.');
+        };
+    } else {
+        alert('Speech recognition not supported in your browser.');
+    }
+}
